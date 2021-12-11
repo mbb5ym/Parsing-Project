@@ -1,5 +1,7 @@
 grammar parsingProject;
 
+// http://blog.anvard.org/articles/2016/03/15/antlr-python.html for tabs and variable defs
+
 // used to help compilation, will be changed later
 expression
    : multiplyingExpression ((PLUS | MINUS) multiplyingExpression)*
@@ -103,27 +105,27 @@ MOD_EQUALS
 
 
 // conditional statements
-IS_LESS
+LT
    : '<'
    ;
 
-IS_LESS_OR_EQUAL
+LE
    : '<='
    ;
 
-IS_GREATER
+GT
    : '>'
    ;
 
-IS_GREATER_OR_EQUAL
+GE
    : '>='
    ;
 
-IS_EQUAL
+EQ
    : '=='
    ;
 
-IS_NOT_EQUAL
+NE
    : '!='
    ;
 
