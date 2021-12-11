@@ -35,7 +35,16 @@ To check if everything is set up properly run:
 ```
 Python parsingProject.py < test.txt
 ```
-if your terminal says "Parsed expression 2*8-7+2 has value 11" then everything is set up 
+if your terminal says "Parsed expression 2*8-7+2 has value 11" 
+then run:
+```
+pygrun parsingProject expression -t
+```
+type: 2*8-7+2 and then control-D twice (on mac) and it should display this text
+
+![img.png](img.png)
+
+you're all set up now
 
 ---
 
