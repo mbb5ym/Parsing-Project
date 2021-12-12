@@ -2,7 +2,6 @@ grammar parsingProject;
 
 // http://blog.anvard.org/articles/2016/03/15/antlr-python.html for tabs and variable defs
 
-// used to help compilation, will be changed later
 expression
    : multiplyingExpression ((PLUS | MINUS) multiplyingExpression)*
    ;
@@ -15,6 +14,15 @@ number
    : MINUS? DIGIT +
    ;
 
+//TOKENS
+
+WS
+    : (' ' | '\n' )+ -> skip
+    ;
+
+TAB
+    : ('\t')
+    ;
 
 
 // conditional blocks
@@ -28,7 +36,10 @@ ELSE
 
 // variable definitions in python?
 
-
+// all possible names for a variable
+ID
+    : [a-z][a-zA-Z0-9_]*
+    ;
 
 
 // iterative loops
@@ -133,10 +144,11 @@ NE
 
 
 // comments
-SINGLE_LINE_COMMENT
-   : '#'
+COMMENT
+   : '#' ~[\n]* -> skip
    ;
 
+// syntax could be wrong on this with brackets
 MULTI_LINE_COMMENT
-   : '"""'
+   : '"""' ~["""] -> skip
    ;
