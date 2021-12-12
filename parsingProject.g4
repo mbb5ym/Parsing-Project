@@ -2,7 +2,6 @@ grammar parsingProject;
 
 // http://blog.anvard.org/articles/2016/03/15/antlr-python.html for tabs and variable defs
 
-// used to help compilation, will be changed later
 expression
    : multiplyingExpression ((PLUS | MINUS) multiplyingExpression)*
    ;
@@ -15,6 +14,15 @@ number
    : MINUS? DIGIT +
    ;
 
+//TOKENS
+
+WS
+    : (' ' | '\n' )+ -> skip
+    ;
+
+TAB
+    : ('\t')
+    ;
 
 
 // conditional blocks
@@ -28,7 +36,10 @@ ELSE
 
 // variable definitions in python?
 
-
+// all possible names for a variable
+ID
+    : [a-z][a-zA-Z0-9_]*
+    ;
 
 
 // iterative loops
@@ -72,6 +83,9 @@ DIGIT
    : ('0' .. '9')
    ;
 
+NONE
+   : 'None'
+   ;
 // assignment operators
 EQUALS
    : '='
@@ -92,7 +106,7 @@ TIMES_EQUALS
 DIVIDE_EQUALS
    : '/='
    ;
-
+ 
 // ^= is not an assignment operator in python, exponential operator is **= in python, ^= is bitwise
 POWER_EQUALS
    : '^='
@@ -129,14 +143,24 @@ NE
    : '!='
    ;
 
-
-
-
-// comments
-SINGLE_LINE_COMMENT
-   : '#'
+NOT
+   : 'not'
    ;
 
+AND
+   : 'and'
+   ;
+
+OR
+   : 'or'
+   ;
+
+// comments
+COMMENT
+   : '#' ~[\n]* -> skip
+   ;
+
+// syntax could be wrong on this with brackets
 MULTI_LINE_COMMENT
-   : '"""'
+   : '"""' ~["""] -> skip
    ;
