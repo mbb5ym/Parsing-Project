@@ -1,21 +1,23 @@
 grammar parsingProject;
 
-// http://blog.anvard.org/articles/2016/03/15/antlr-python.html for tabs and variable defs
+
+/* FROM HIS EXAMPLE */
+//multiplyingExpression
+//   : number ((TIMES | DIV) number)*
+//   ;
+//
+//number
+//   : MINUS? DIGIT +
+//   ;
+
+
+// RULES:
 
 expression
    : comment
    ;
 
-multiplyingExpression
-   : number ((TIMES | DIV) number)*
-   ;
 
-number
-   : MINUS? DIGIT +
-   ;
-
-
-// Custom rules
 comment
    : COMMENT
    ;
@@ -23,11 +25,9 @@ comment
 
 
 
+//TOKENS:
 
-
-//TOKENS
-
-//KEYWORDS
+/* KEYWORDS: */
 //conditionals
 IF : 'if' ;
 ELIF : 'elif' ;
@@ -44,132 +44,58 @@ FALSE : 'False' ;
 //functions
 PRINT : 'print' ;
 RANGE : 'range' ;
-//etc.
+//misc.
 IN : 'in' ;
 RETURN : 'return' ;
 BREAK : 'break' ;
 CONTINUE : 'continue' ;
+NOT : 'not' ;
 NONE : 'None' ;
 
 
-// comments
-COMMENT
-   : '#' ~[\n\r\f]* -> skip
-   ;
-
-WS
-    : (' ' | '\n' )+ -> skip
-    ;
-
-TAB
-    : ('\t')
-    ;
 
 
-// conditional blocks
-
-
-// variable definitions in python?
-
-// all possible names for a variable
-ID
-    : [a-zA-Z0-9_]*
-    ;
-
-
-
-
-
+/* RUBRIK REQUIREMENTS */
+// identifiers
+ID : [a-zA-Z0-9_]* ;
 // arithmetic operators
-PLUS
-   : '+'
-   ;
-
-MINUS
-   : '-'
-   ;
-
-TIMES
-   : '*'
-   ;
-
-DIV
-   : '/'
-   ;
-
-MOD
-   : '%'
-   ;
-
-// ^ is not an arithmetic operator in python, exponential operator is ** in python, ^ is bitwise XOR
-POWER
-   : '^'
-   ;
-
-// WAS NOT A REQUIREMENT BUT GOOD TO HAVE IMO, WE CAN REMOVE IF YOU GUYS WANT
-DIGIT
-   : ('0' .. '9')
-   ;
-
+PLUS : '+' ;
+MINUS : '-' ;
+TIMES : '*' ;
+DIV : '/' ;
+MOD : '%' ;
+EXPONENT : '**' ;
 // assignment operators
-EQUALS
-   : '='
-   ;
-
-PLUS_EQUALS
-   : '+='
-   ;
-
-MINUS_EQUALS
-   : '-='
-   ;
-
-TIMES_EQUALS
-   : '*='
-   ;
-
-DIVIDE_EQUALS
-   : '/='
-   ;
- 
-// ^= is not an assignment operator in python, exponential operator is **= in python, ^= is bitwise
-POWER_EQUALS
-   : '^='
-   ;
-
-MOD_EQUALS
-   : '%='
-   ;
-
-
-
+EQUALS : '=' ;
+PLUS_EQUALS : '+=' ;
+MINUS_EQUALS : '-=' ;
+TIMES_EQUALS : '*=' ;
+DIVIDE_EQUALS : '/=' ;
+POWER_EQUALS : '**=' ;
+MOD_EQUALS : '%=' ;
 // conditional statements
-LT
-   : '<'
-   ;
+LT : '<' ;
+LE : '<=' ;
+GT : '>' ;
+GE : '>=' ;
+EQ : '==' ;
+NE : '!=' ;
+// comments
+COMMENT : '#' ~[\n\r\f]* -> skip ;
 
-LE
-   : '<='
-   ;
 
-GT
-   : '>'
-   ;
 
-GE
-   : '>='
-   ;
 
-EQ
-   : '=='
-   ;
+/* UTILITY */
+// white space
+WS : (' ')+ -> skip ;
+TAB : ('\t') ;
+NEW_LINE : ('\n') ;
+// numeric
+DIGIT : ('0' .. '9') ;
+// strings
 
-NE
-   : '!='
-   ;
 
-NOT
-   : 'not'
-   ;
+
 
 
