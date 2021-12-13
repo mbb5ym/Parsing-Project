@@ -1,6 +1,16 @@
 grammar parsingProject;
 
 
+/* TODO:
+1) finish adding tokens for miscelaneous characters such as ( { " , :
+2) create tokens for compound things such as strings or function calls ...
+3) write rules to handle these changes and complete lines like an assignment or if satatement
+4) address any issues with context switches - https://tobebuilds.com/parsing-string-interpolations-with-antlr4/
+/*
+
+
+
+
 /* FROM HIS EXAMPLE */
 //multiplyingExpression
 //   : number ((TIMES | DIV) number)*
@@ -57,12 +67,13 @@ NONE : 'None' ;
 
 /* RUBRIK REQUIREMENTS */
 // identifiers
-ID : [a-zA-Z0-9_]* ;
+ID : [a-zA-Z_][a-zA-Z0-9_]* ;
 // arithmetic operators
 PLUS : '+' ;
 MINUS : '-' ;
 TIMES : '*' ;
 DIV : '/' ;
+FLOOR_DIV : '//' ;
 MOD : '%' ;
 EXPONENT : '**' ;
 // assignment operators
@@ -93,7 +104,10 @@ TAB : ('\t') ;
 NEW_LINE : ('\n') ;
 // numeric
 DIGIT : ('0' .. '9') ;
+INT : DIGIT+ ;
+FLAOT : DIGIT*  '.' DIGIT+ ;
 // strings
+STRING : '"' (~["\\\r\n] | '\\')* '"' ;
 
 
 
