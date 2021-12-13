@@ -3,7 +3,7 @@ grammar parsingProject;
 // http://blog.anvard.org/articles/2016/03/15/antlr-python.html for tabs and variable defs
 
 expression
-   : multiplyingExpression ((PLUS | MINUS) multiplyingExpression)*
+   : comment
    ;
 
 multiplyingExpression
@@ -14,7 +14,48 @@ number
    : MINUS? DIGIT +
    ;
 
+
+// Custom rules
+comment
+   : COMMENT
+   ;
+
+
+
+
+
+
 //TOKENS
+
+//KEYWORDS
+//conditionals
+IF : 'if' ;
+ELIF : 'elif' ;
+ELSE : 'else' ;
+//iteratives
+FOR : 'for' ;
+WHILE : 'while' ;
+//evaluators
+AND : 'and' ;
+OR : 'or' ;
+//booleans
+TRUE : 'True' ;
+FALSE : 'False' ;
+//functions
+PRINT : 'print' ;
+RANGE : 'range' ;
+//etc.
+IN : 'in' ;
+RETURN : 'return' ;
+BREAK : 'break' ;
+CONTINUE : 'continue' ;
+NONE : 'None' ;
+
+
+// comments
+COMMENT
+   : '#' ~[\n\r\f]* -> skip
+   ;
 
 WS
     : (' ' | '\n' )+ -> skip
@@ -26,30 +67,17 @@ TAB
 
 
 // conditional blocks
-IF
-   : 'if'
-   ;
 
-ELSE
-   : 'else'
-   ;
 
 // variable definitions in python?
 
 // all possible names for a variable
 ID
-    : [a-z][a-zA-Z0-9_]*
+    : [a-zA-Z0-9_]*
     ;
 
 
-// iterative loops
-WHILE
-   : 'while'
-   ;
 
-FOR
-   : 'for'
-   ;
 
 
 // arithmetic operators
@@ -83,9 +111,6 @@ DIGIT
    : ('0' .. '9')
    ;
 
-NONE
-   : 'None'
-   ;
 // assignment operators
 EQUALS
    : '='
@@ -147,20 +172,4 @@ NOT
    : 'not'
    ;
 
-AND
-   : 'and'
-   ;
 
-OR
-   : 'or'
-   ;
-
-// comments
-COMMENT
-   : '#' ~[\n]* -> skip
-   ;
-
-// syntax could be wrong on this with brackets
-MULTI_LINE_COMMENT
-   : '"""' ~["""] -> skip
-   ;
