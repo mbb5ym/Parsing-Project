@@ -52,8 +52,9 @@ OR : 'or' ;
 TRUE : 'True' ;
 FALSE : 'False' ;
 //functions
-PRINT : 'print' ;
-RANGE : 'range' ;
+PRINT : 'print(' (ID | STRING)+ ')' ;
+RANGE : 'range(' (NUMERIC_ID | INT) ',' ' '* (ID | INT) ')' ;
+STR : 'str(' STRING ')' ;
 //misc.
 IN : 'in' ;
 RETURN : 'return' ;
@@ -63,11 +64,18 @@ NOT : 'not' ;
 NONE : 'None' ;
 
 
+/* TYPES */
+// numeric
+INT : DIGIT+ ;
+FLOAT : DIGIT*  '.' DIGIT+ ;
+// strings
+STRING : '"' (~["\\\r\n"'] | '\\')* '"' ;
 
 
 /* RUBRIK REQUIREMENTS */
 // identifiers
 ID : [a-zA-Z_][a-zA-Z0-9_]* ;
+NUMERIC_ID : DIGIT* ~[""] ;
 // arithmetic operators
 PLUS : '+' ;
 MINUS : '-' ;
@@ -82,7 +90,7 @@ PLUS_EQUALS : '+=' ;
 MINUS_EQUALS : '-=' ;
 TIMES_EQUALS : '*=' ;
 DIVIDE_EQUALS : '/=' ;
-POWER_EQUALS : '**=' ;
+EXPONENT_EQUALS : '**=' ;
 MOD_EQUALS : '%=' ;
 // conditional statements
 LT : '<' ;
@@ -101,15 +109,7 @@ COMMENT : '#' ~[\n\r\f]* -> skip ;
 // white space
 WS : (' ')+ -> skip ;
 TAB : ('\t') ;
-NEW_LINE : ('\n') ;
-// numeric
+NEW_LINE : ('\n') -> skip ;
 DIGIT : ('0' .. '9') ;
-INT : DIGIT+ ;
-FLAOT : DIGIT*  '.' DIGIT+ ;
-// strings
-STRING : '"' (~["\\\r\n] | '\\')* '"' ;
-
-
-
 
 
