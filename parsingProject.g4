@@ -51,10 +51,6 @@ OR : 'or' ;
 //booleans
 TRUE : 'True' ;
 FALSE : 'False' ;
-//functions
-PRINT : 'print(' (ID | STRING)+ ')' ;
-RANGE : 'range(' (NUMERIC_ID | INT) ',' ' '* (ID | INT) ')' ;
-STR : 'str(' STRING ')' ;
 //misc.
 IN : 'in' ;
 RETURN : 'return' ;
@@ -63,10 +59,29 @@ CONTINUE : 'continue' ;
 NOT : 'not' ;
 NONE : 'None' ;
 
+/* EXPRESSION */
+EXPR : (ID | INTEGER | FLOAT | STRING) WS OPERATOR WS (ID | INTEGER | FLOAT | STRING) ;
 
-/* TYPES */
+
+/* OPERATOR TYPES */
+OPERATOR : ARITHMETIC_OP | ASSIGNMENT_OP | CONDITIONAL_OP;
+ARITHMETIC_OP :
+    PLUS | MINUS | TIMES | DIV |
+    FLOOR_DIV | MOD | EXPONENT
+    ;
+ASSIGNMENT_OP :
+    EQUALS | PLUS_EQUALS | MINUS_EQUALS |
+    TIMES_EQUALS | DIVIDE_EQUALS |
+    EXPONENT_EQUALS | MOD_EQUALS
+    ;
+CONDITIONAL_OP :
+    LT | LE | GT | GE | EQ | NE
+    ;
+
+
+/* DATA TYPES */
 // numeric
-INT : DIGIT+ ;
+INTEGER : DIGIT+ ;
 FLOAT : DIGIT*  '.' DIGIT+ ;
 // strings
 STRING : '"' (~["\\\r\n"'] | '\\')* '"' ;
@@ -75,7 +90,7 @@ STRING : '"' (~["\\\r\n"'] | '\\')* '"' ;
 /* RUBRIK REQUIREMENTS */
 // identifiers
 ID : [a-zA-Z_][a-zA-Z0-9_]* ;
-NUMERIC_ID : DIGIT* ~[""] ;
+
 // arithmetic operators
 PLUS : '+' ;
 MINUS : '-' ;
@@ -85,6 +100,7 @@ FLOOR_DIV : '//' ;
 MOD : '%' ;
 EXPONENT : '**' ;
 // assignment operators
+
 EQUALS : '=' ;
 PLUS_EQUALS : '+=' ;
 MINUS_EQUALS : '-=' ;
@@ -92,6 +108,7 @@ TIMES_EQUALS : '*=' ;
 DIVIDE_EQUALS : '/=' ;
 EXPONENT_EQUALS : '**=' ;
 MOD_EQUALS : '%=' ;
+
 // conditional statements
 LT : '<' ;
 LE : '<=' ;
@@ -102,14 +119,34 @@ NE : '!=' ;
 // comments
 COMMENT : '#' ~[\n\r\f]* -> skip ;
 
-
-
-
 /* UTILITY */
 // white space
-WS : (' ')+ -> skip ;
+WS : (' ')* -> skip ;
 TAB : ('\t') ;
 NEW_LINE : ('\n') -> skip ;
-DIGIT : ('0' .. '9') ;
+DIGIT : [0-9] ;
+COLON : ':' ;
+
+
+
+
+//functions
+PRINT : 'print('WS (ID | STRING)+ (WS '+' WS (ID | STRING))* WS')' ;
+RANGE : 'range('WS (ID | INTEGER) WS ',' WS (ID | INTEGER) WS ')' ;
+STR : 'str(' WS (ID | STRING)+ (WS '+' WS (ID | STRING))* WS  ')' ;
+// TODO INT
+INT : 'int(' (DIGIT | ID) ')' ;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
