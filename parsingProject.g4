@@ -17,17 +17,18 @@ convert larger umbrella tokens to rules
 
 // RULES:
 program
-    : statement
-    | expression
+    : statement+
+    | expression+
+    | NEW_LINE+
     | EOF
     ;
 
 /* STATEMENTS */
 statement :
-    assignmentStatement
-    | conditionalStatement
+    assignmentStatement+
+    | conditionalStatement+
     ;
-assignmentStatement : ID ASSIGNMENT_TOKEN WS* expression WS* ;
+assignmentStatement : ID ASSIGNMENT_TOKEN WS* expression WS* | NEW_LINE; // TODO  had * after newline
 conditionalStatement :
     ((IF | ELIF) WS* expression WS* COLON WS*)
     | ((IF | ELIF) WS* OPEN_PAREN WS* expression WS* CLOSE_PAREN WS* COLON WS*)
@@ -45,11 +46,6 @@ expression :
     | FLOAT
     WS*
     ;
-
-
-
-
-
 
 
 
@@ -115,9 +111,9 @@ INT : 'int(' WS (INTEGER | ID) WS ')' ;
 
 
 /* UTILITY */
-WS : ' '+ -> skip ;
+WS : [ \r\n]+ -> skip;
 TAB : ('\t') ;
-NEW_LINE : ('\n') -> skip;
+NEW_LINE : ('\n')+ -> skip ;
 DIGIT : [0-9] ;
 OPEN_PAREN : '(' ;
 CLOSE_PAREN : ')' ;
