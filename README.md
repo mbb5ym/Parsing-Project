@@ -59,7 +59,7 @@ The best way to visualize the tree is to:
 
 ---
 
-**5.) DISCLAIMERS!
+**5.) DISCLAIMERS!**
 
 - At the end of the video we explained how the group contributions worked. All commits are coming from Adam Menker but the entire group worked together on this. 
 - Since we used Python to write the parser, grun will not work. The best way to see the tree is to use the IntelliJ extension
