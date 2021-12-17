@@ -1,5 +1,19 @@
-# Parsing-Project
+This Project by Team Pikachu is designed to take in python code 
+and make a visual tree with it, to allow you to visualize your 
+code in a two-dimensional space. We did this with an ANTLR script 
+that uses rules and tokens to parse through Python code. To use it, 
+you need to install antlr4 and a compatible IDE on your system.
 
+Our members:
+Thunnathorne Atom
+Michael Branstetter
+Byron Doyal
+Adam Menker
+Joseph Murphy
+
+
+
+# Parsing-Project
 ---
 
 ## Setup:
