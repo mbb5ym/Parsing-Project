@@ -1,21 +1,6 @@
 grammar parsingProject;
 
-
-/* TODO:
-convert function tokens to function rules
-*/
-
-/* FROM HIS EXAMPLE */
-//multiplyingExpression
-//   : number ((TIMES | DIV) number)*
-//   ;
-//
-//number
-//   : MINUS? DIGIT +
-//   ;
-
-
-// RULES:
+// START RULE
 program
     : statement+
     | expression+
@@ -23,13 +8,16 @@ program
     | EOF
     ;
 
-/* STATEMENTS */
+
+// RULES:
+/*-------------------------------STATEMENT---------------------------------------*/
 statement :
     assignmentStatement+
     | conditionalStatement+
     | iterativeStatement+
     ;
-assignmentStatement : ID ASSIGNMENT_TOKEN WS* expression WS* | NEW_LINE; // TODO  had * after newline
+
+assignmentStatement : ID ASSIGNMENT_TOKEN WS* expression WS* | NEW_LINE;
 conditionalStatement :
     ((IF | ELIF) WS* expression WS* COLON WS*)
     | ((IF | ELIF) WS* OPEN_PAREN WS* expression WS* CLOSE_PAREN WS* COLON WS*)
@@ -39,8 +27,9 @@ iterativeStatement :
     (FOR ID IN rangeFunction COLON) statement* BREAK?
     | (WHILE expression (CONDITIONAL_OP expression)* COLON) statement* BREAK?
     ;
+/*-------------------------------------------------------------------------------*/
 
-
+/*------------------------------EXPRESSION---------------------------------------*/
 expression :
     WS*
     (ID | INTEGER | FLOAT | STRING) WS*
@@ -51,8 +40,9 @@ expression :
     | statement
     WS*
     ;
+/*-------------------------------------------------------------------------------*/
 
-
+/*--------------------------------FUNCTION---------------------------------------*/
 function :
 	printFunction |
 	 rangeFunction
@@ -60,33 +50,39 @@ function :
 	| intFunction
 	;
 
-
-/* FUNCTIONS */
-printFunction : PRINT OPEN_PAREN WS* (STRING | INTEGER | ID | strFunction) (ARITHMETIC_OP (STRING | INTEGER | ID | strFunction))* WS* CLOSE_PAREN ;
+printFunction : PRINT OPEN_PAREN WS* (STRING | INTEGER | ID | strFunction)
+	(ARITHMETIC_OP (STRING | INTEGER | ID | strFunction))* WS* CLOSE_PAREN ;
 rangeFunction : RANGE OPEN_PAREN WS* expression WS*
 	COMMA WS* expression (ARITHMETIC_OP expression)* WS* CLOSE_PAREN ;
-strFunction : STR OPEN_PAREN WS* (ID | STRING) (WS* ARITHMETIC_OP WS* (ID | STRING))* WS* CLOSE_PAREN ;
-intFunction : INT OPEN_PAREN WS* (INTEGER | ID) (ARITHMETIC_OP (INTEGER | ID))* WS* CLOSE_PAREN WS* ;
+strFunction : STR OPEN_PAREN WS* (ID | STRING)
+	(WS* ARITHMETIC_OP WS* (ID | STRING))* WS* CLOSE_PAREN ;
+intFunction : INT OPEN_PAREN WS* (INTEGER | ID)
+	(ARITHMETIC_OP (INTEGER | ID))* WS* CLOSE_PAREN WS* ;
 
+/*-------------------------------------------------------------------------------*/
 
-/* OPERATORS */
+/*--------------------------------OPERATOR---------------------------------------*/
 expressionOperator :
     ARITHMETIC_OP
     | CONDITIONAL_OP
     ;
+/*-------------------------------------------------------------------------------*/
+
+
+
+
 
 
 //TOKENS:
-
-/* ASSIGNMENT */
+/*--------------------------------ASSIGNMENT-------------------------------------*/
 ASSIGNMENT_TOKEN :
     EQUALS | PLUS_EQUALS | MINUS_EQUALS |
     TIMES_EQUALS | DIVIDE_EQUALS |
     EXPONENT_EQUALS | MOD_EQUALS
     ;
+/*-------------------------------------------------------------------------------*/
 
-
-/* OPERATOR TYPES */
+/*----------------------------------OPERATOR-------------------------------------*/
 ARITHMETIC_OP :
     PLUS | MINUS | TIMES | DIV |
     FLOOR_DIV | MOD | EXPONENT
@@ -94,9 +90,9 @@ ARITHMETIC_OP :
 CONDITIONAL_OP :
     LT | LE | GT | GE | EQ | NE | AND | OR
     ;
+/*-------------------------------------------------------------------------------*/
 
-
-/* KEYWORDS: */
+/*----------------------------------KEY WORD-------------------------------------*/
 //conditionals
 IF : 'if' ;
 ELIF : 'elif' ;
@@ -110,29 +106,27 @@ OR : 'or' ;
 //booleans
 TRUE : 'True' ;
 FALSE : 'False' ;
-//misc.
-IN : 'in' ;
-RETURN : 'return' ;
-BREAK : 'break' ;
-CONTINUE : 'continue' ;
-NOT : 'not' ;
-NONE : 'None' ;
-
-
-/* DATA TYPES */
-INTEGER : DIGIT+ ;
-FLOAT : DIGIT*  '.' DIGIT+ ;
-STRING : '"' (~["\\\r\n] | '\\')* '"' ; // removed an extra " in [..]
-
-
+//function
 PRINT : 'print' ;
 RANGE : 'range' ;
 STR : 'str' ;
 INT : 'int' ;
+//misc.
+IN : 'in' ;
+RETURN : 'return' ;
+BREAK : 'break' -> skip;
+CONTINUE : 'continue' ;
+NOT : 'not' ;
+NONE : 'None' ;
+/*-------------------------------------------------------------------------------*/
 
+/*----------------------------------DATA TYPES-----------------------------------*/
+INTEGER : DIGIT+ ;
+FLOAT : DIGIT*  '.' DIGIT+ ;
+STRING : '"' (~["\\\r\n] | '\\')* '"' ;
+/*-------------------------------------------------------------------------------*/
 
-
-/* UTILITY */
+/*------------------------------------UTITLITY-----------------------------------*/
 WS : [ \n]+ -> skip;
 TAB : ('\t')+ -> skip;
 NEW_LINE : ('\n')+ ;
@@ -141,9 +135,9 @@ OPEN_PAREN : '(' ;
 CLOSE_PAREN : ')' ;
 COLON : ':' ;
 COMMA : ',' ;
+/*-------------------------------------------------------------------------------*/
 
-
-/* RUBRIK REQUIREMENTS */
+/*--------------------------------RUBRIK REQUIRMENTS-----------------------------*/
 // identifiers
 ID : [a-zA-Z_][a-zA-Z0-9_]* ;
 // arithmetic operators
@@ -170,8 +164,8 @@ GE : '>=' ;
 EQ : '==' ;
 NE : '!=' ;
 // comments
-COMMENT : '#' ~[\n\r\f]* -> skip;
-
+COMMENT : '#' ~[\n\r\f]* -> skip ;
+/*-------------------------------------------------------------------------------*/
 
 
 

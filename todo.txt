@@ -1,0 +1,10 @@
+NOTES:
+
+ducttape:
+	added skip to 'BREAK' 'TAB' 'WS'
+
+
+TODO:
+	edit readme
+	create tutorial video
+	fix ducttape
