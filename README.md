@@ -5,11 +5,11 @@ that uses rules and tokens to parse through Python code. To use it,
 you need to install antlr4 and a compatible IDE on your system.
 
 Our members:
-Thunnathorne Atom
-Michael Branstetter
-Byron Doyal
-Adam Menker
-Joseph Murphy
+- Thunnathorne Synhiranakkrakul
+- Michael Branstetter
+- Byron Doyal
+- Adam Menker
+- Joseph Murphy
 
 
 
@@ -71,4 +71,8 @@ fix by installing antlr4 runtime with this command:
 pip install antlr4-python3-runtime
 ```
 If you are having issues with commands with '... python ...', change it to '... python3 ...'
+
+```
+ pygrun parsingProject program -t < python_test_code.py 
+```
 
