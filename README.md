@@ -63,7 +63,7 @@ The best way to visualize the tree is to:
 
 - At the end of the video we explained how the group contributions worked. All commits are coming from Adam Menker but the entire group worked together on this. 
 - Since we used Python to write the parser, grun will not work. The best way to see the tree is to use the IntelliJ extension
-- Since the program is quite long, our tree is very wide. This means that we included many screenshots. Most of the screenshots are zoomed in so you can read the text. There are a few screenshots that are zoomed out though where it is harder to read the text. I tried to make each screenshot show a couple lines of code. I also scribbled out portions of each screenshot to make it more readable so you were only looking at the part of the tree that showed the corresponding code. Sorry the screenshots are a little difficult to read.
+- Since the program is quite long, our tree is very wide. This means that we included many screenshots. Most of the screenshots are zoomed in so you can read the text. There are a few screenshots that are zoomed out though where it is harder to read the text. I tried to make each screenshot show a couple lines of code. I also scribbled out portions of each screenshot to make it more readable so you were only looking at the part of the tree that showed the corresponding code. Sorry the screenshots are a little difficult to read. They are in order from ss1-ss20, the rest are the zoomed out ones
 - the demo video is in the zipped folder 
 
 
