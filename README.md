@@ -2,10 +2,10 @@ This Project by Team Pikachu is designed to take in python code and make a visua
 
 Our members:
 Thunnathorne Atom
+Michael Branstetter
 Byron Doyal
 Adam Menker
 Joseph Murphy
-Michael 
 
 
 
