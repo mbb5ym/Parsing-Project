@@ -11,7 +11,10 @@ Our members:
 - Adam Menker
 - Joseph Murphy
 
-
+This repository includes:
+- .g4 file
+- generated ANTLR4 files
+- screenshots
 
 # Parsing-Project
 ---
@@ -45,34 +48,22 @@ antlr4 -Dlanguage=Python3 parsingProject.g4
 ```
 This will generate the parser, lexer, and listener
 
-To check if everything is set up properly run:
-```
-Python parsingProject.py < test.txt
-```
-if your terminal says "Parsed expression 2*8-7+2 has value 11" 
-then run:
-```
-pygrun parsingProject expression -t
-```
-type: 2*8-7+2 and then control-D twice (on mac) and it should display this text
+---
 
-![img.png](img.png)
+**4.) Visualizing the Tree**
 
-you're all set up now
+The best way to visualize the tree is to:
+- open our code in IntelliJ IDEA
+- dowload the ANTLR4 Preview extension 
+- test with the input file 
 
 ---
 
-**4.) Possible Errors**
-```
-ImportError: No module named antlr4
-```
-fix by installing antlr4 runtime with this command:
-```
-pip install antlr4-python3-runtime
-```
-If you are having issues with commands with '... python ...', change it to '... python3 ...'
+**5.) DISCLAIMERS!
 
-```
- pygrun parsingProject program -t < python_test_code.py 
-```
+- At the end of the video we explained how the group contributions worked. All commits are coming from Adam Menker but the entire group worked together on this. 
+- Since we used Python to write the parser, grun will not work. The best way to see the tree is to use the IntelliJ extension
+- Since the program is quite long, our tree is very wide. This means that we included many screenshots. Most of the screenshots are zoomed in so you can read the text. There are a few screenshots that are zoomed out though where it is harder to read the text. I tried to make each screenshot show a couple lines of code. I also scribbled out portions of each screenshot to make it more readable so you were only looking at the part of the tree that showed the corresponding code. Sorry the screenshots are a little difficult to read.
+- the demo video is in the zipped folder 
+
 
