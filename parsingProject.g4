@@ -2,8 +2,8 @@ grammar parsingProject;
 
 
 /* TODO:
-convert larger umbrella tokens to rules
-/*
+convert function tokens to function rules
+*/
 
 /* FROM HIS EXAMPLE */
 //multiplyingExpression
@@ -27,6 +27,7 @@ program
 statement :
     assignmentStatement+
     | conditionalStatement+
+    | iterativeStatement+
     ;
 assignmentStatement : ID ASSIGNMENT_TOKEN WS* expression WS* | NEW_LINE; // TODO  had * after newline
 conditionalStatement :
@@ -34,19 +35,45 @@ conditionalStatement :
     | ((IF | ELIF) WS* OPEN_PAREN WS* expression WS* CLOSE_PAREN WS* COLON WS*)
     | (ELSE COLON WS*)
     ;
+iterativeStatement :
+    (FOR ID IN rangeFunction COLON) statement* BREAK?
+    | (WHILE expression (CONDITIONAL_OP expression)* COLON) statement* BREAK?
+    ;
 
 
 expression :
     WS*
-    ((ID | INTEGER | FLOAT | STRING) (WS* EXPRESSION_OPERATOR WS* (ID | INTEGER | FLOAT | STRING))*)
-    | ( OPEN_PAREN WS* (ID | INTEGER | FLOAT | STRING) (WS* EXPRESSION_OPERATOR WS* (ID | INTEGER | FLOAT | STRING))* WS* CLOSE_PAREN )
-    | ID
-    | STRING
-    | INTEGER
-    | FLOAT
+    (ID | INTEGER | FLOAT | STRING) WS*
+    (expressionOperator WS* (ID | INTEGER | FLOAT | STRING))*
+    | OPEN_PAREN WS* (ID | INTEGER | FLOAT | STRING) WS*
+    (expressionOperator WS* (ID | INTEGER | FLOAT | STRING))* WS* CLOSE_PAREN
+    | function
+    | statement
     WS*
     ;
 
+
+function :
+	printFunction |
+	 rangeFunction
+	| strFunction
+	| intFunction
+	;
+
+
+/* FUNCTIONS */
+printFunction : PRINT OPEN_PAREN WS* (STRING | INTEGER | ID | strFunction) (ARITHMETIC_OP (STRING | INTEGER | ID | strFunction))* WS* CLOSE_PAREN ;
+rangeFunction : RANGE OPEN_PAREN WS* expression WS*
+	COMMA WS* expression (ARITHMETIC_OP expression)* WS* CLOSE_PAREN ;
+strFunction : STR OPEN_PAREN WS* (ID | STRING) (WS* ARITHMETIC_OP WS* (ID | STRING))* WS* CLOSE_PAREN ;
+intFunction : INT OPEN_PAREN WS* (INTEGER | ID) (ARITHMETIC_OP (INTEGER | ID))* WS* CLOSE_PAREN WS* ;
+
+
+/* OPERATORS */
+expressionOperator :
+    ARITHMETIC_OP
+    | CONDITIONAL_OP
+    ;
 
 
 //TOKENS:
@@ -59,11 +86,6 @@ ASSIGNMENT_TOKEN :
     ;
 
 
-/* OPERATORS */
-EXPRESSION_OPERATOR :
-    ARITHMETIC_OP
-    | CONDITIONAL_OP
-    ;
 /* OPERATOR TYPES */
 ARITHMETIC_OP :
     PLUS | MINUS | TIMES | DIV |
@@ -100,24 +122,25 @@ NONE : 'None' ;
 /* DATA TYPES */
 INTEGER : DIGIT+ ;
 FLOAT : DIGIT*  '.' DIGIT+ ;
-STRING : '"' (~["\\\r\n"'] | '\\')* '"' ;
+STRING : '"' (~["\\\r\n] | '\\')* '"' ; // removed an extra " in [..]
 
 
-/* FUNCITONS */
-PRINT : 'print('WS (ID | STRING)+ (WS '+' WS (ID | STRING))* WS')' ;
-RANGE : 'range('WS (ID | INTEGER) WS ',' WS (ID | INTEGER) WS ')' ;
-STR : 'str(' WS (ID | STRING)+ (WS '+' WS (ID | STRING))* WS  ')' ;
-INT : 'int(' WS (INTEGER | ID) WS ')' ;
+PRINT : 'print' ;
+RANGE : 'range' ;
+STR : 'str' ;
+INT : 'int' ;
+
 
 
 /* UTILITY */
-WS : [ \r\n]+ -> skip;
-TAB : ('\t') ;
-NEW_LINE : ('\n')+ -> skip ;
-DIGIT : [0-9] ;
+WS : [ \n]+ -> skip;
+TAB : ('\t')+ -> skip;
+NEW_LINE : ('\n')+ ;
+DIGIT : '-'? [0-9] ;
 OPEN_PAREN : '(' ;
 CLOSE_PAREN : ')' ;
 COLON : ':' ;
+COMMA : ',' ;
 
 
 /* RUBRIK REQUIREMENTS */
@@ -148,6 +171,7 @@ EQ : '==' ;
 NE : '!=' ;
 // comments
 COMMENT : '#' ~[\n\r\f]* -> skip;
+
 
 
 
